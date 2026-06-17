@@ -6,7 +6,7 @@ export default function Transaction(){
                 <div className="bg-green-900 w-1/3 h-full"></div>
                 <div className="bg-green-900 w-1/4 h-full"></div>
             </div>
-            <div className="border-2 border-black grid grid-rows-[0.2fr_0.4fr_3.4fr]">
+            <div className="border-2 border-black grid grid-rows-[50px_80px_3.4fr]">
                 <div className="bg-amber-100"></div>
                 <div className="bg-amber-200 flex flex-row justify-between">
                     <div className="bg-pink-400 h-full w-1/3"></div>
