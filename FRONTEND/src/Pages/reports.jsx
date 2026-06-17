@@ -1,4 +1,4 @@
-export default function Budgetplanner(){
+export default function Reports(){
 
     return(
         <>
