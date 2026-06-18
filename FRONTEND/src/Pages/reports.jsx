@@ -2,7 +2,7 @@ export default function Reports(){
 
     return(
         <>
-        <div className="border-2 border-black h-screen p-5 grid grid-rows-[0.8fr_3.2fr]">
+        <div className="border-2 border-black h-[800px] p-5 grid grid-rows-[0.8fr_3.2fr]">
             <div className="bg-amber-100"></div>
             <div className="bg-amber-400 grid grid-rows-[1fr_3fr]">
                 <div className="bg-gray-500"></div>
