@@ -13,7 +13,7 @@ const budgetSchema = mongoose.Schema({
         type : Date,
         required : true
     },
-    show:{
+    latest:{
         type : Boolean,
         required : true
     }
