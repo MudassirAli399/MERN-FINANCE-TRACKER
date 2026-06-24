@@ -3,6 +3,7 @@ import asynchandler from "../utils/Asynchandler.js"
 import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import mongoose from "mongoose"
+import jwt from "jsonwebtoken"
 
 const registeruser = asynchandler(async (req, res) => {
 
@@ -25,7 +26,12 @@ console.log("HOST:", mongoose.connection.host);
         Email,
         Password
     })
+    // generate token
+    console.log(newuser._id)
+    const accesstoken = newuser.generateaccesstoken()
+    const refreshtoken = newuser.generaterefreshtoken()
     // send response
-    return res.send(ApiResponse(200,"User created successfully",newuser))
+    
+    return res.cookie("accesstoken",accesstoken,{httpOnly : true}).cookie("refreshtoken",refreshtoken,{httpOnly : true}).send(ApiResponse(200,"User created successfully",newuser))
 })
 export default registeruser
