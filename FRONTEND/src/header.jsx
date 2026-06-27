@@ -1,6 +1,8 @@
-import {NavLink} from "react-router-dom";
+import {NavLink, Link} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 export default function Header(){
+    const user = useSelector((state) => state.User);
     return(
         <>
             <div className=" lg:h-screen md:h-[300px] md:w-full md:sticky md:top-0 md:bottom-0  z-50  lg:sticky lg:top-0">
@@ -46,22 +48,27 @@ export default function Header(){
                         
                         {/* </nav> */}
                     </div>
-
-                    <div className="flex-[0.7] grid lg:grid-rows-[2.5fr_1.5fr] gap-2 ">
+                    {user.Active ? 
+                    ( <div className="flex-[0.7] grid lg:grid-rows-[2.5fr_1.5fr] gap-2 ">
                         <div className="grid lg:grid-cols-[1fr_3fr]  ">
                             <div className=" flex justify-end items-end">
-                                <div className="w-10 h-10 text-center  text-[20px] rounded-4xl pt-1 bg-[rgb(241,245,249)] ">MA</div>
+                                <div className="w-10 h-10 text-center  text-[20px] rounded-4xl pt-1 bg-[rgb(241,245,249)] ">{user.Name[0]}</div>
                             </div>
                             <div className="  text-[12px] pt-3 ">
-                                <p className="font-bold text-black  font-sans">MUDASSIR ALI</p>
-                                <p className="text-gray-600  font-sans">muddasira435@gmail.com</p>
+                                <p className="font-bold text-black  font-sans">{user.Name}</p>
+                                <p className="text-gray-600  font-sans">{user.Email}</p>
                             </div>
                         </div>
                         <div className="  rounded-xl">
                             <button className="block w-full rounded-xl h-full bg-[rgb(250,250,250)]">DARK MODE</button>
                         </div>
 
-                    </div>
+                    </div>) 
+                    :
+                    (<center><Link to="/create" >Create/Login Account</Link></center>)
+                    
+                    }
+                   
                 </div>    
             </div>
         </>

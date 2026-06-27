@@ -7,11 +7,11 @@ import jwt from "jsonwebtoken"
 
 const registeruser = asynchandler(async (req, res) => {
 
-    console.log("DB NAME:", mongoose.connection.name);
-console.log("HOST:", mongoose.connection.host);
+  
     // data collect
     const { Name, Email, Password } = req.body
     // data empty
+    console.log(req.body)
     if(!Name || !Email || !Password){
       return  res.send(ApiError(400,"All fields are required"))
     }
