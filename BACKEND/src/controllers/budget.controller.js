@@ -2,6 +2,7 @@ import budget from "../models/budget.model.js";
 import asynchandler from "../utils/Asynchandler.js";
 import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
+import transaction from "../models/transaction.model.js";
 
 const createbudget = asynchandler(async (req, res) => {
     // data collect
@@ -16,41 +17,69 @@ const createbudget = asynchandler(async (req, res) => {
     // is current month set to true
     
     let expiryDate= new Date()
-    if(StartNow==false){
+    let currentmonth = new Date()
+    let month = ""
+    if(StartNow===true){
+             expiryDate.setMonth(expiryDate.getMonth() + 1);
+             const nextmonth = new Date()
+             nextmonth.setMonth(nextmonth.getMonth() + 1);
+            month = `${currentmonth.toLocaleString("default", { month: "long" })}-${nextmonth.toLocaleString("default", { month: "long" })}`
+        
+
+            console.log(expiryDate);
+            
+    }
+    // calculate remaining days
+    else{
+         
             const today = new Date();
 
             expiryDate = new Date(
                 today.getFullYear(),
                 today.getMonth() + 1,
                 0
-);
-    }
-    // calculate remaining days
-    else{
-         
+                );  
+        month=currentmonth.toLocaleString("default",{ month: "long" });
 
-        expiryDate.setMonth(expiryDate.getMonth() + 1);
-        
-        
-        console.log(expiryDate);
+       
     }
     // make expiry date
     // user create
-    const user = await budget.create({
+    const Budget = await budget.create({
         UserId : Id,
         Items : items,
         expirydate : expiryDate,
         latest : false
     })
     // save data
-   if(user){
-    return res.send(ApiResponse(200,"Budget created successfully",user))
+   if(Budget){
+    const existingtransaction = await transaction.findOne({UserId : Id})
+    if(existingtransaction){
+        existingtransaction.CurrentMonth=month
+        existingtransaction.AllTransactions.set("August",{})
+        existingtransaction.markModified(
+        "AllTransactions"
+    );
+        console.log("i am runnig")
+        await existingtransaction.save()
+        
+    }
+    else{
+        const transactionmap = new Map()
+        transactionmap.set(month,{})
+        await transaction.create({
+            UserId : Id,
+            CurrentMonth : month,
+            AllTransactions : transactionmap
+        })
+    }
+    return res.send(ApiResponse(200,"Budget created successfully",Budget))
    }    
 })
 
 const showbudget = asynchandler(async(req,res)=>{
     const budgetToBeSent = await budget.find({UserId : req.id,latest : true})
-    if(budgetToBeSent){
+    if(budgetToBeSent.length>0){
         return res.send(ApiResponse(200,"Budget found",budgetToBeSent))
     }else{
         return res.send(ApiError(400,"Budget not found"))
