@@ -25,7 +25,7 @@ export default function CreateAccount() {
       }
 
       const response = await fetch(
-        "http://localhost:3000/api/user/create",
+        import.meta.env.VITE_CREATE_ACCOUNT,
         {
           method: "POST",
           headers: {

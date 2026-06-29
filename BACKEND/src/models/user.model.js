@@ -17,6 +17,13 @@ const userSchema = new mongoose.Schema({
     Password: {
         type: String,
         required: true
+    },
+    OTP:{
+        type:String
+    },
+
+    OTPExpiry:{
+        type:Date
     }
 }, { timestamps: true });
 
@@ -50,6 +57,10 @@ userSchema.methods.generaterefreshtoken = function (){
         id : this._id,
         email : this.Email,
     },process.env.JWT_SECRET,{expiresIn : "7d"})
+}
+
+userSchema.methods.comparePassword = async function (Password) {
+    return await bcrypt.compare(Password, this.Password);
 }
 const User = mongoose.model("User", userSchema);
 

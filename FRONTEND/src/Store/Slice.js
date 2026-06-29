@@ -7,6 +7,12 @@ const slice = createSlice({
             Active:false,
             Name:"",
             Email:""
+        },
+        ForgotPassword:{
+            Gmail:"",
+            Email : false,
+            OTP: false,
+            ChangePassword: false
         }
     },
     reducers: {
@@ -15,9 +21,15 @@ const slice = createSlice({
             state.User.Name = action.payload.Name
             state.User.Email = action.payload.Email
         },
+        UpdatePassword: (state, action) => {
+            state.ForgotPassword.Gmail = action.payload.Gmail? action.payload.Gmail : state.ForgotPassword.Gmail
+            state.ForgotPassword.Email = action.payload.Email
+            state.ForgotPassword.OTP = action.payload.OTP
+            state.ForgotPassword.ChangePassword = action.payload.ChangePassword
+        },
     },
 });
 
-export const { login } = slice.actions
+export const { login , UpdatePassword} = slice.actions
 
 export default slice.reducer
