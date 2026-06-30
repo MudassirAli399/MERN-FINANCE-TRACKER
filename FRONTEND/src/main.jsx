@@ -5,6 +5,7 @@ import Dashboard from './Pages/dashboard.jsx'
 import Transaction from './Pages/transaction.jsx'
 import Reports from './Pages/reports.jsx'
 import Budgetplanner from './Pages/budgetplanner.jsx'
+import Addbudget from './Pages/addbudget.jsx'
 import CreateAccount from './Pages/createaccount.jsx'
 import Login from './Pages/loginaccount.jsx'
 import { Provider } from 'react-redux'
@@ -28,6 +29,7 @@ const route = createBrowserRouter(
       <Route path="forgot-password" element={<EmailStep />} /> 
       <Route path="forgot-password/otp" element={<OtpStep />} />
       <Route path="forgot-password/new-password" element={<NewPasswordStep />} />
+      <Route path="budgetplanner/create" element={<Addbudget />} />
     </Route> 
                           )                         
                                   )

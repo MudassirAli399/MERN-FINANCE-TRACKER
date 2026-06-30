@@ -11,7 +11,7 @@ const transactionSchema = mongoose.Schema({
     },
      AllTransactions:{
         type:Map,
-        of:Object,
+        of:Array,
         default:{}
     }
 

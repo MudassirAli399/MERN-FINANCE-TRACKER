@@ -3,6 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 const slice = createSlice({
     name: "counter",
     initialState: {
+        Budget:{
+            Created : false,
+            fetched : false,
+            Data : []
+        },
         User:{
             Active:false,
             Name:"",
@@ -27,9 +32,15 @@ const slice = createSlice({
             state.ForgotPassword.OTP = action.payload.OTP
             state.ForgotPassword.ChangePassword = action.payload.ChangePassword
         },
+        UpdateBudget : (state, action) => {
+            state.Budget.Created = action.payload.Created ? action.payload.Created : state.Budget.Created
+            state.Budget.fetched = action.payload.fetched ? action.payload.fetched : state.Budget.fetched
+            state.Budget.Data = action.payload.Data ? action.payload.Data : state.Budget.Data
+        }
+        
     },
 });
 
-export const { login , UpdatePassword} = slice.actions
+export const { login , UpdatePassword,UpdateBudget} = slice.actions
 
 export default slice.reducer

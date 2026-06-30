@@ -5,7 +5,7 @@ export default function Header(){
     const user = useSelector((state) => state.User);
     return(
         <>
-            <div className=" lg:h-screen md:h-[300px] md:w-full md:sticky md:top-0 md:bottom-0  z-50  lg:sticky lg:top-0">
+            <div className=" lg:h-screen md:h-[300px] md:w-full md:sticky md:top-0 md:bottom-0  z-50  lg:sticky lg:top-0 border-r-1">
                 <div className="h-full w-full flex lg:flex-col md:flex-row ">
                     <div className="border-b-1 border-black flex items-center justify-center flex-[0.3] gap-1.5 ">
                         <svg width="40" height="40" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">

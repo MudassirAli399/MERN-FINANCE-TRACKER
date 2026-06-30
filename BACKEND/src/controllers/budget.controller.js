@@ -49,14 +49,14 @@ const createbudget = asynchandler(async (req, res) => {
         UserId : Id,
         Items : items,
         expirydate : expiryDate,
-        latest : false
+        latest : true
     })
     // save data
    if(Budget){
     const existingtransaction = await transaction.findOne({UserId : Id})
     if(existingtransaction){
         existingtransaction.CurrentMonth=month
-        existingtransaction.AllTransactions.set("August",{})
+        existingtransaction.AllTransactions.set("August",[])
         existingtransaction.markModified(
         "AllTransactions"
     );
@@ -78,8 +78,17 @@ const createbudget = asynchandler(async (req, res) => {
 })
 
 const showbudget = asynchandler(async(req,res)=>{
-    const budgetToBeSent = await budget.find({UserId : req.id,latest : true})
-    if(budgetToBeSent.length>0){
+    const budgetToBeSent = await budget.findOne({UserId : req.id,latest : true})
+    const today = new Date()
+    console.log(budgetToBeSent.expirydate);
+    console.log(today);
+    if(budgetToBeSent.expirydate <= today){
+        budgetToBeSent.latest = false
+        await budgetToBeSent.save()
+        return res.send(ApiResponse(200,"Budget expired"))
+        
+    }
+    if(budgetToBeSent){
         return res.send(ApiResponse(200,"Budget found",budgetToBeSent))
     }else{
         return res.send(ApiError(400,"Budget not found"))
