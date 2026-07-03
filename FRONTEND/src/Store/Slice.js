@@ -18,6 +18,11 @@ const slice = createSlice({
             Email : false,
             OTP: false,
             ChangePassword: false
+        },
+        Transaction:{
+            StartFetch : true,
+            Popup : false,
+            Trans : []
         }
     },
     reducers: {
@@ -36,11 +41,15 @@ const slice = createSlice({
             state.Budget.Created = action.payload.Created ? action.payload.Created : state.Budget.Created
             state.Budget.fetched = action.payload.fetched ? action.payload.fetched : state.Budget.fetched
             state.Budget.Data = action.payload.Data ? action.payload.Data : state.Budget.Data
+        },
+        UpdateTransaction : (state, action) => {
+            state.Transaction.Popup = action.payload.Popup ?? state.Transaction.Popup
+            state.Transaction.Trans = action.payload.Trans ?? state.Transaction.Trans
+            state.Transaction.StartFetch = action.payload.StartFetch ?? state.Transaction.StartFetch
         }
-        
     },
 });
 
-export const { login , UpdatePassword,UpdateBudget} = slice.actions
+export const { login , UpdatePassword,UpdateBudget,UpdateTransaction} = slice.actions
 
 export default slice.reducer

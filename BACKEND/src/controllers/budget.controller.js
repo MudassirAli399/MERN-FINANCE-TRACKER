@@ -56,7 +56,7 @@ const createbudget = asynchandler(async (req, res) => {
     const existingtransaction = await transaction.findOne({UserId : Id})
     if(existingtransaction){
         existingtransaction.CurrentMonth=month
-        existingtransaction.AllTransactions.set("August",[])
+        existingtransaction.AllTransactions.set(month,[])
         existingtransaction.markModified(
         "AllTransactions"
     );
@@ -66,7 +66,7 @@ const createbudget = asynchandler(async (req, res) => {
     }
     else{
         const transactionmap = new Map()
-        transactionmap.set(month,{})
+        transactionmap.set(month,[])
         await transaction.create({
             UserId : Id,
             CurrentMonth : month,
