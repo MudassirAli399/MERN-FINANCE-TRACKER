@@ -77,7 +77,184 @@ const showtransaction = asynchandler(async(req,res)=>{
     const month =
     Transaction.CurrentMonth;
 
-    const data = Transaction.AllTransactions.get(month);
+    
+
+    const data = Transaction.AllTransactions.get(month)
+
+  const categories = await transaction.aggregate([
+{
+    $match:{
+        UserId:req.id
+    }
+},
+{
+    $project:{
+        _id:0,
+        Transaction:{
+            $getField:{
+                field:month,
+                input:"$AllTransactions"
+            }
+        }
+    }
+},
+{
+    $unwind:"$Transaction"
+},
+{
+    $group:{
+        _id:{
+            $toLower:"$Transaction.category"
+        },
+
+        transactions:{
+            $push:"$Transaction"
+        },
+
+        totalAmount:{
+            $sum:{
+                $toInt:"$Transaction.amount"
+            }
+        }
+    }
+},
+{
+    $group:{
+        _id:null,
+
+        data:{
+            $push:{
+                data:[
+                    {
+                        k:"$_id",
+                        v:"$totalAmount"
+                    },
+                    {
+                        k:{
+                            $concat:[
+                                "$_id",
+                                "Transactions"
+                            ]
+                        },
+                        v:"$transactions"
+                    }
+                ]
+            }
+        }
+    }
+},
+{
+    $project:{
+        data:{
+            $reduce:{
+                input:"$data",
+                initialValue:[],
+                in:{
+                    $concatArrays:[
+                        "$$value",
+                        "$$this.data"
+                    ]
+                }
+            }
+        }
+    }
+},
+{
+    $replaceRoot:{
+        newRoot:{
+            $arrayToObject:"$data"
+        }
+    }
+}
+]);
+
+   const Type = await transaction.aggregate([
+{
+    $match:{
+        UserId:req.id
+    }
+},
+{
+    $project:{
+        _id:0,
+        Transaction:{
+            $getField:{
+                field:month,
+                input:"$AllTransactions"
+            }
+        }
+    }
+},
+{
+    $unwind:"$Transaction"
+},
+{
+    $group:{
+        _id:{
+            $toLower:"$Transaction.type"
+        },
+
+        transactions:{
+            $push:"$Transaction"
+        },
+
+        totalAmount:{
+            $sum:{
+                $toInt:"$Transaction.amount"
+            }
+        }
+    }
+},
+{
+    $group:{
+        _id:null,
+
+        data:{
+            $push:{
+                data:[
+                    {
+                        k:"$_id",
+                        v:"$totalAmount"
+                    },
+                    {
+                        k:{
+                            $concat:[
+                                "$_id",
+                                "Transactions"
+                            ]
+                        },
+                        v:"$transactions"
+                    }
+                ]
+            }
+        }
+    }
+},
+{
+    $project:{
+        data:{
+            $reduce:{
+                input:"$data",
+                initialValue:[],
+                in:{
+                    $concatArrays:[
+                        "$$value",
+                        "$$this.data"
+                    ]
+                }
+            }
+        }
+    }
+},
+{
+    $replaceRoot:{
+        newRoot:{
+            $arrayToObject:"$data"
+        }
+    }
+}
+]);
+
 
     if(!Transaction){
 
@@ -93,7 +270,12 @@ const showtransaction = asynchandler(async(req,res)=>{
         ApiResponse(
             200,
             "Transaction found",
-            data
+            {
+                "OriginalData" : data,
+                "Types" : Type[0],
+                "Categories" : categories[0],
+                "Month" : month
+            }
         )
     );
 

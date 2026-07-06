@@ -1,6 +1,7 @@
 import { useForm, useFieldArray } from "react-hook-form";
 import { useSelector,useDispatch } from "react-redux";
 import {UpdateBudget} from "../Store/Slice.js"
+import React from "react";
 
 export default function Addbudget() {
   const user = useSelector((state) => state.User);
@@ -21,6 +22,12 @@ export default function Addbudget() {
     // data.pairs => [{ text, number }, { text, number }, ...]
     console.log(data)
     console.log(data.pairs);
+    
+    
+    
+    dispatch(UpdateBudget({Created:true}))
+    
+   
     alert(JSON.stringify(data.pairs, null, 2));
     try{
 
@@ -46,7 +53,7 @@ export default function Addbudget() {
 
             if(output.status==200){
                 dispatch(UpdateBudget({Created:true}))
-                console.log("created is true")
+                
             }
 
             console.log(output);
@@ -56,6 +63,8 @@ export default function Addbudget() {
             console.log("Error:",error);
         }
   };
+
+  budget.Created ? console.log("Budget already created") : ""
 
   return (
     <>

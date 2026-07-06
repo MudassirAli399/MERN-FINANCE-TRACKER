@@ -2,9 +2,11 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../Store/Slice.js";
+import { useNavigate } from "react-router-dom";
 export default function Login() {
   const user = useSelector((state) => state.User);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -37,7 +39,7 @@ export default function Login() {
           Email: output.RequiredData.Email
         }))
         
-        
+        navigate("/");
       } catch (error) {
         console.error(error);
       }

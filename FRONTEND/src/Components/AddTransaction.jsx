@@ -1,9 +1,10 @@
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import {UpdateTransaction} from "../Store/Slice.js"
 import {useNavigate} from "react-router-dom"
 export default function AddTransaction() {
   const { register, handleSubmit, reset } = useForm();
+  const categories = useSelector((state) => state.Budget.Categories);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -30,7 +31,7 @@ export default function AddTransaction() {
       console.log(output);
       if(output.status==200){
         dispatch(UpdateTransaction({StartFetch:true,Popup:false}));
-        pagereload();
+        
       }
 
     // console.log(data);
@@ -38,7 +39,7 @@ export default function AddTransaction() {
   };
   const popup = ()  =>{
                     console.log("clicked");
-                       dispatch(UpdateTransaction({Popup:false}))
+                    dispatch(UpdateTransaction({Popup:false}))
                        
   }
 
@@ -120,10 +121,13 @@ export default function AddTransaction() {
                 className="w-full px-3 py-2.5 rounded-lg bg-slate-50 border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-blue-400 transition"
               >
                 <option value="">Select category</option>
-                <option value="groceries">Groceries</option>
-                <option value="rent">Rent</option>
-                <option value="entertainment">Entertainment</option>
-                <option value="expense">Other</option>
+                {
+                  categories.map((category) => (
+                    <option key={category} value={category}>{category}</option>
+                  ))
+                }
+              
+                <option value="other">Other</option>
 
               </select>
             </div>

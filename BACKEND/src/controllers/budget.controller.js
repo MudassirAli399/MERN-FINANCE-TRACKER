@@ -85,7 +85,7 @@ const showbudget = asynchandler(async(req,res)=>{
     if(budgetToBeSent.expirydate <= today){
         budgetToBeSent.latest = false
         await budgetToBeSent.save()
-        return res.send(ApiResponse(200,"Budget expired"))
+        return res.send(ApiResponse(400,"Budget expired"))
         
     }
     if(budgetToBeSent){

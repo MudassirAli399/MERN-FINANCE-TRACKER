@@ -2,15 +2,16 @@ import React from "react";
 
 export default function Budgetcard({
     Name,
-    Value
+    Value,
+    serve 
 }) {
-const [serve,setserve] = React.useState(1500);
+// const [serve,setserve] = React.useState(0);
 const [remain,setremain] = React.useState(0); 
 const [percent,setprecent] = React.useState(0);
 const [limit,setlimit] = React.useState(false);
 React.useEffect(() => {
     setremain(Value-serve);
-    setprecent((serve/Value)*100);
+    setprecent(Math.floor((serve/Value)*100));
     if(serve>=Value){
         setlimit(true);
     }
@@ -39,7 +40,7 @@ return(
             <div className="w-full">
                 <meter
                     className="w-full"
-                    value="70"
+                    value={percent}
                     min="0"
                     max="100"
                 ></meter>
