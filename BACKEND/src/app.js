@@ -9,7 +9,7 @@ const app = express();
 
 
 app.use(cors({
-        origin: "*",
+        origin: "https://mern-finance-tracker-three.vercel.app/",
         credentials: true
     }))
 app.use(express.json({limit : "30kb"}))
