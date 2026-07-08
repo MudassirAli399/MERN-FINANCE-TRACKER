@@ -37,8 +37,10 @@ const registeruser = asynchandler(async (req, res) => {
    
     // send response
     return res
-    .cookie("accesstoken",accesstoken,{httpOnly:true})
-    .cookie("refreshtoken",refreshtoken,{httpOnly:true})
+    .cookie("accesstoken",accesstoken,{httpOnly:true,secure: true,
+    sameSite: "None"})
+    .cookie("refreshtoken",refreshtoken,{httpOnly:true, secure: true,
+    sameSite: "None"})
     .send(ApiResponse(201,"User created successfully",newuser))
 })
 
@@ -72,8 +74,10 @@ const loginuser = asynchandler(async (req, res) => {
     const refreshtoken = await user.generaterefreshtoken()
 
     return res
-    .cookie("accesstoken",accesstoken,{httpOnly:true})
-    .cookie("refreshtoken",refreshtoken,{httpOnly:true})
+    .cookie("accesstoken",accesstoken,{httpOnly:true, secure: true,
+    sameSite: "None"})
+    .cookie("refreshtoken",refreshtoken,{httpOnly:true, secure: true,
+    sameSite: "None"})
     .send(ApiResponse(200,"User logged in successfully",user))
 
 })
