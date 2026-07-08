@@ -27,7 +27,7 @@ const addtransaction = asynchandler(async(req,res)=>{
 
         return res.send(
             ApiError(
-                400,
+                404,
                 "Transaction not found"
             )
         );
@@ -260,7 +260,7 @@ const showtransaction = asynchandler(async(req,res)=>{
 
         return res.send(
             ApiError(
-                400,
+                404,
                 "Transaction not found"
             )
         );

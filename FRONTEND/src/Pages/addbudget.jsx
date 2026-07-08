@@ -1,11 +1,13 @@
 import { useForm, useFieldArray } from "react-hook-form";
 import { useSelector,useDispatch } from "react-redux";
 import {UpdateBudget} from "../Store/Slice.js"
+import { useNavigate } from "react-router-dom";
 import React from "react";
 
 export default function Addbudget() {
   const user = useSelector((state) => state.User);
   const budget = useSelector((state) => state.Budget);
+  const navigate = useNavigate();
   const dispatch = useDispatch();  
   const { register, control, handleSubmit } = useForm({
     defaultValues: {
@@ -50,10 +52,11 @@ export default function Addbudget() {
             );
 
             const output = await response.json();
+            if(output.status==400){alert(output.message);return}
 
-            if(output.status==200){
+            if(output.status==201){
                 dispatch(UpdateBudget({Created:true}))
-                
+                navigate("/")
             }
 
             console.log(output);

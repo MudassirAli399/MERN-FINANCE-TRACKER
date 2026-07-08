@@ -30,7 +30,9 @@ export default function NewPasswordStep() {
         );
 
       const data = await response.json();
-      if(data.message="Update"){
+      if(data.status==400){alert(data.message);return}
+      if(data.status==404){alert(data.message);return}
+      if(data.status==200){
         dispatch(UpdatePassword({Email:false,OTP:false,ChangePassword:true}))
       }
       console.log(data);

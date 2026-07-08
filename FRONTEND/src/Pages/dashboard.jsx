@@ -36,7 +36,8 @@ export default function Dashboard(){
                     );
     
                     const output = await response.json();
-    
+                    if(output.status===410){alert(output.message);return}
+                    if(output.status===404){alert(output.message);return}
                     if(output.status===200){
                             const items = output.RequiredData.Items;
     
@@ -72,6 +73,7 @@ export default function Dashboard(){
                 const response = await fetch(import.meta.env.VITE_GET_TRANSACTION,{method:"GET",credentials:"include"});
                 const output = await response.json();
                 console.log(output);
+                if(output.status===404){alert(output.message);return}
                 dispatch(UpdateTransaction({
                     StartFetch:false,
                     Trans:output.RequiredData.OriginalData,
@@ -89,8 +91,11 @@ export default function Dashboard(){
         },[StartFetch])    
     return(
         <>
-            <div className="border-2 border-black lg:h-[800px] md:h-[1600px] grid grid-rows-[1fr_3fr] p-6 gap-4 overflow-y-auto">
-                <div className="border-2 border-black flex lg:flex-row md:flex-col p-2 gap-4 md:items-center justify-between">
+        {user.Active ? (
+            
+                budget.Created ? (
+            <div className=" lg:h-[800px] md:h-[1600px] grid grid-rows-[1fr_3fr] p-6 gap-4 overflow-y-auto">
+                <div className=" flex lg:flex-row md:flex-col p-2 gap-4 md:items-center justify-between">
                     <DashboardCard
                         text = "Income"
                         month = {transaction.Month}
@@ -105,15 +110,84 @@ export default function Dashboard(){
                     {/* <div className="bg-green-900 lg:h-full lg:w-1/4 md:w-full md:h-1/4"></div> */}
                     
                 </div>
-                <div className="border-2 border-black flex lg:flex-row md:flex-col gap-2">
-                    <div className="flex-3">
-                        <MonthlyChart data={chartData}/>
+                <div className=" flex lg:flex-row md:flex-col gap-2">
+                    <div className="flex-3 p-2 border-1 rounded-2xl border-gray-400 bg-[rgb(255,255,255)]]">
+                        <h3 className="font-medium font-sans text-[20px]">Income vs Expense</h3>
+                        <p className="font-light text-gray-500 font-sans text-[15px]">THis is Raw Data.Original data will be show after 1 month</p>
+                        <div className="mt-[2%]"><MonthlyChart  data={chartData}/></div>
                     </div>
-                    <div className=" flex-2">
+                    <div className="flex-2 border border-gray-400 dark:border-gray-700 rounded-2xl bg-white dark:bg-gray-900 p-4">
 
-                    </div>  
+    <h3 className="font-medium font-sans text-[20px]">
+        Last 5 Transactions
+    </h3>
+
+    <p className="font-light text-gray-500 dark:text-gray-300 text-[14px] mb-4">
+        Recent activity
+    </p>
+
+    <div className="flex flex-col gap-3">
+
+    {
+        transaction?.Trans
+        ?.slice(-5)
+        ?.reverse()
+        ?.map((item,index)=>{
+
+            return(
+
+            <div
+            key={index}
+            className="flex justify-between items-center border-b border-gray-200 dark:border-gray-700 pb-2"
+            >
+
+                <div>
+
+                    <p className="font-medium">
+                        {item.category}
+                    </p>
+
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                        {item.description}
+                    </p>
+
+                </div>
+
+                <div className="text-right">
+
+                    <p className={`font-bold ${
+                        item.type==="expense"
+                        ? "text-red-500"
+                        : "text-green-500"
+                    }`}>
+                        ${item.amount}
+                    </p>
+
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                        {item.date}
+                    </p>
+
+                </div>
+
+            </div>
+
+            )
+
+        })
+    }
+
+    </div>
+
+</div>  
                 </div>
             </div>
+                ):
+                (
+                    <div>You have not created a budget</div>
+                )
+            
+        ) : (<div>You are not logged in</div>)}
+           
         </>
     )
 }

@@ -7,42 +7,53 @@ import transaction from "../models/transaction.model.js";
 const createbudget = asynchandler(async (req, res) => {
     // data collect
     const { StartNow,items } = req.body
+
     // data empty
     if(!items){
-      return  res.send(ApiError(400,"All fields are required"))
+      return res.send(ApiError(400,"All fields are required"))
     }
+
     // get user id using jwt
     const Id = req.id
+
     // is budget available
     // is current month set to true
     
     let expiryDate= new Date()
     let currentmonth = new Date()
     let month = ""
-    if(StartNow===true){
-             expiryDate.setMonth(expiryDate.getMonth() + 1);
-             const nextmonth = new Date()
-             nextmonth.setMonth(nextmonth.getMonth() + 1);
-            month = `${currentmonth.toLocaleString("default", { month: "long" })}-${nextmonth.toLocaleString("default", { month: "long" })}`
-        
 
-            console.log(expiryDate);
+    if(StartNow===true){
+
+        expiryDate.setMonth(expiryDate.getMonth() + 1);
+
+        const nextmonth = new Date()
+
+        nextmonth.setMonth(nextmonth.getMonth() + 1);
+
+        month = `${currentmonth.toLocaleString("default", { month: "long" })}-${nextmonth.toLocaleString("default", { month: "long" })}`
+
+        console.log(expiryDate);
             
     }
+
     // calculate remaining days
     else{
          
-            const today = new Date();
+        const today = new Date();
 
-            expiryDate = new Date(
-                today.getFullYear(),
-                today.getMonth() + 1,
-                0
-                );  
-        month=currentmonth.toLocaleString("default",{ month: "long" });
+        expiryDate = new Date(
+            today.getFullYear(),
+            today.getMonth() + 1,
+            0
+        );  
 
-       
+        month=currentmonth.toLocaleString(
+            "default",
+            { month: "long" }
+        );
     }
+
     // make expiry date
     // user create
     const Budget = await budget.create({
@@ -51,48 +62,108 @@ const createbudget = asynchandler(async (req, res) => {
         expirydate : expiryDate,
         latest : true
     })
+
     // save data
-   if(Budget){
-    const existingtransaction = await transaction.findOne({UserId : Id})
-    if(existingtransaction){
-        existingtransaction.CurrentMonth=month
-        existingtransaction.AllTransactions.set(month,[])
-        existingtransaction.markModified(
-        "AllTransactions"
-    );
-        console.log("i am runnig")
-        await existingtransaction.save()
-        
-    }
-    else{
-        const transactionmap = new Map()
-        transactionmap.set(month,[])
-        await transaction.create({
-            UserId : Id,
-            CurrentMonth : month,
-            AllTransactions : transactionmap
+    if(Budget){
+
+        const existingtransaction = await transaction.findOne({
+            UserId : Id
         })
-    }
-    return res.send(ApiResponse(200,"Budget created successfully",Budget))
-   }    
+
+        if(existingtransaction){
+
+            existingtransaction.CurrentMonth=month
+
+            existingtransaction.AllTransactions.set(
+                month,
+                []
+            )
+
+            existingtransaction.markModified(
+                "AllTransactions"
+            );
+
+            console.log("i am runnig")
+
+            await existingtransaction.save()
+        
+        }
+        else{
+
+            const transactionmap = new Map()
+
+            transactionmap.set(month,[])
+
+            await transaction.create({
+                UserId : Id,
+                CurrentMonth : month,
+                AllTransactions : transactionmap
+            })
+        }
+
+        return res.send(
+            ApiResponse(
+                201,
+                "Budget created successfully",
+                Budget
+            )
+        )
+    }    
 })
+
 
 const showbudget = asynchandler(async(req,res)=>{
-    const budgetToBeSent = await budget.findOne({UserId : req.id,latest : true})
+    console.log(req.id)
+    const budgetToBeSent =
+    await budget.findOne({
+        UserId : req.id,
+        latest : true
+    })
+
+    console.log(budgetToBeSent);
+
     const today = new Date()
-    console.log(budgetToBeSent.expirydate);
+
+    console.log(
+        budgetToBeSent.expirydate
+    );
+
     console.log(today);
+
     if(budgetToBeSent.expirydate <= today){
+
         budgetToBeSent.latest = false
+
         await budgetToBeSent.save()
-        return res.send(ApiResponse(400,"Budget expired"))
+
+        return res.send(
+            ApiResponse(
+                410,
+                "Budget expired"
+            )
+        )
         
     }
+
     if(budgetToBeSent){
-        return res.send(ApiResponse(200,"Budget found",budgetToBeSent))
-    }else{
-        return res.send(ApiError(400,"Budget not found"))
+
+        return res.send(
+            ApiResponse(
+                200,
+                "Budget found",
+                budgetToBeSent
+            )
+        )
+    }
+    else{
+
+        return res.send(
+            ApiError(
+                404,
+                "Budget not found"
+            )
+        )
     }
 })
 
-export  {createbudget,showbudget}
+export {createbudget,showbudget}

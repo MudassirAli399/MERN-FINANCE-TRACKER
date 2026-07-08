@@ -33,6 +33,9 @@ export default function Login() {
         );
         const output = await response.json();
         console.log(output);
+        if(output.status==400){alert(output.message);return}
+        if(output.status==404){alert(output.message);return}
+        if(output.status==401){alert(output.message);return}
         dispatch(login({
           Active: true,
           Name: output.RequiredData.Name,

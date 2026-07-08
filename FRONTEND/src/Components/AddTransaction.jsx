@@ -26,11 +26,14 @@ export default function AddTransaction() {
 
       const output = await response.json();
 
-      if(output)
+      if(output.status==400){alert(output.message);return}
+      if(output.status==404){alert(output.message);return}
+      
 
       console.log(output);
       if(output.status==200){
         dispatch(UpdateTransaction({StartFetch:true,Popup:false}));
+        navigate("/");
         
       }
 

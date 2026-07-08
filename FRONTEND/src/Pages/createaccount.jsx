@@ -43,6 +43,15 @@ export default function CreateAccount() {
 
       console.log(data);
 
+      if(data.status==400){
+        alert(data.message);
+        return
+      }
+      if(data.status==409){
+        alert(data.message);
+        return
+      }
+
       dispatch(
         login({
           Active: true,

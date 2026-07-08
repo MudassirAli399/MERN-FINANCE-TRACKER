@@ -27,8 +27,11 @@ export default function OtpStep() {
         );
 
       const data = await response.json();
+      if(data.status==400){alert(data.message);return}
+      if(data.status==404){alert(data.message);return}
+      if(data.status==410){alert(data.message);return}
       console.log(data);
-      if(data.message="found"){
+      if(data.status==200){
         dispatch(UpdatePassword({Email:true,OTP:true,ChangePassword:false}))}
   };
   if(!ForgotPassword.Email){
