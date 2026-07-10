@@ -10,28 +10,65 @@ export default function Transaction(){
     const dispatch = useDispatch();
     const Transactions = useSelector((state) => state.Transaction);
     const StartFetch = useSelector((state) => state.Transaction.StartFetch);
-
+    const [search, setSearch] = React.useState("");
     const [selectedType, setSelectedType] = React.useState("trans");
 
-    let trans=[];
+    const searchTrans = async () => {
 
-    if(selectedType==="trans"){
-        trans=Transactions.Trans || [];
+    if (search.trim() === "") {
+        if (selectedType === "trans") {
+            setTrans(Transactions.Trans || []);
+        } else if (selectedType.includes("category")) {
+            const result = selectedType.split("-").pop();
+            setTrans(
+                Transactions.Categories?.[`${result}Transactions`] || []
+            );
+        } else {
+            setTrans(
+                Transactions.Types?.[`${selectedType}Transactions`] || []
+            );
+        }
+        return;
     }
-    else if(selectedType.includes("category")){
-        const result=selectedType.split("-").pop();
 
-        trans=
-        Transactions.Categories?.[`${result}Transactions`] || [];
-    }
-    else{
-        trans=
-        Transactions.Types?.[`${selectedType}Transactions`] || [];
-    }
+    const response = await fetch(import.meta.env.VITE_SEARCH_TRANSACTION, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        credentials: "include",
+        body: JSON.stringify({
+            search: search
+        })
+    });
 
-    React.useEffect(()=>{
-        console.log(selectedType);
-    },[selectedType]);
+    const output = await response.json();
+
+    if (output.status === 200) {
+        setTrans(output.RequiredData);
+    } else {
+        setTrans([]);
+    }
+};
+    const [trans,setTrans] = React.useState([]);
+
+
+   React.useEffect(() => {
+    if (selectedType === "trans") {
+        setTrans(Transactions.Trans || []);
+    }
+    else if (selectedType.includes("category")) {
+        const result = selectedType.split("-").pop();
+        setTrans(
+            Transactions.Categories?.[`${result}Transactions`] || []
+        );
+    }
+    else {
+        setTrans(
+            Transactions.Types?.[`${selectedType}Transactions`] || []
+        );
+    }
+}, [selectedType, Transactions]);
 
     return(
         <>
@@ -88,12 +125,13 @@ export default function Transaction(){
                     <div className="h-full w-1/2 flex gap-2  dark:border-gray-700 pb-[1%]">
 
                         <input
-                            onChange={(e)=>setSelectedType(e.target.value)}
+                            onChange={(e)=>setSearch(e.target.value)}
                             type="text"
                             className="flex-1 px-3 py-2.5 rounded-lg bg-slate-50 dark:bg-gray-700 border border-slate-200 dark:border-gray-600 text-sm outline-none focus:ring-2 focus:ring-blue-400 transition"
                         />
 
                         <button
+                            onClick={searchTrans}
                             className="px-5 py-2 rounded-lg bg-[#1C77AA] text-white hover:bg-[#155e85] transition cursor-pointer"
                         >
                             Search

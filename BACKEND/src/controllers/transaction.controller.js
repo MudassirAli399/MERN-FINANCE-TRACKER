@@ -280,5 +280,51 @@ const showtransaction = asynchandler(async(req,res)=>{
     );
 
 })
+const SearchTransaction = asynchandler(async (req, res) => {
 
-export {addtransaction,showtransaction}
+    const { search } = req.body;
+
+    if (!search) {
+        return res.send(
+            ApiError(
+                400,
+                "Search text is required"
+            )
+        );
+    }
+
+    const Transaction = await transaction.findOne({
+        UserId: req.id
+    });
+
+    if (!Transaction) {
+        return res.send(
+            ApiError(
+                404,
+                "Transaction not found"
+            )
+        );
+    }
+
+    const month = Transaction.CurrentMonth;
+
+    const transactions =
+        Transaction.AllTransactions.get(month) || [];
+
+    const filteredTransactions = transactions.filter((item) =>
+        item.description
+            .toLowerCase()
+            .includes(search.toLowerCase())
+    );
+
+    return res.send(
+        ApiResponse(
+            200,
+            "Transactions found",
+            filteredTransactions
+        )
+    );
+
+});
+
+export {addtransaction,showtransaction,SearchTransaction}
