@@ -1,9 +1,31 @@
 import {NavLink, Link} from "react-router-dom";
 import {useSelector} from "react-redux";
+import React from "react";
 
 export default function Header({dark,setDark}){
 
     const user = useSelector((state) => state.User);
+    const [menuOpen,setMenuOpen] = React.useState(true)
+
+    React.useEffect(() => {
+
+    const handleResize = () => {
+        if (window.innerWidth < 768) {
+            setMenuOpen(false);
+        } else {
+            setMenuOpen(true);
+        }
+    };
+
+    handleResize(); // mount hote hi ek dafa check kar lo
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+        window.removeEventListener("resize", handleResize);
+    };
+
+}, []);
 
     return(
         <>
@@ -35,14 +57,14 @@ export default function Header({dark,setDark}){
                     lg:border-r-0
                     lg:border-b
                     border-black
-                    flex items-center justify-center
+                    flex items-center justify-between
                     gap-1.5
                     py-3
                     md:flex-[0.3]
                     lg:flex-[0.3]
                     dark:border-gray-700
                     ">
-
+                        <div className="flex items-center gap-1.5">
                         <svg
                         width="36"
                         height="36"
@@ -108,18 +130,28 @@ export default function Header({dark,setDark}){
                         ">
                             Finance Tracker
                         </p>
+                        </div>
+                        <button
+                        onClick={() => setMenuOpen(!menuOpen)}
+                        className="md:hidden flex flex-col justify-center items-center gap-1.5 w-9 h-9 shrink-0"
+                        aria-label="Toggle menu"
+                        >
+                            <span className={`block h-0.5 w-6 bg-current transition-transform ${menuOpen ? "rotate-45 translate-y-2" : ""}`} />
+                            <span className={`block h-0.5 w-6 bg-current transition-opacity ${menuOpen ? "opacity-0" : ""}`} />
+                            <span className={`block h-0.5 w-6 bg-current transition-transform ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+                        </button>
 
                     </div>
 
                     {/* Navigation */}
-                    <div className="
-                    border-b
+                    <div className={
+                    `border-b
                     lg:border-b
                     md:border-b-0
                     md:border-r
                     lg:border-r-0
                     border-black
-                    flex
+                    ${menuOpen ? "flex" : "hidden"}
                     flex-col
                     sm:flex-row
                     md:flex-row
@@ -136,8 +168,8 @@ export default function Header({dark,setDark}){
                     lg:items-start
                 
                     p-3
-                    dark:border-gray-700
-                    ">
+                    dark:border-gray-700`
+                    }>
 
                         <div className="h-[40px] w-full md:w-[110px] lg:w-full flex justify-center">
 
@@ -215,11 +247,9 @@ export default function Header({dark,setDark}){
 
                     {user.Active ? (
 
-                            <div className="
-                            w-full
-
-                            grid
-
+                            <div className={
+                            `w-full
+                            ${menuOpen ? "grid" : "hidden"}
                             grid-cols-1
                             sm:grid-cols-2
                             md:grid-cols-1
@@ -227,8 +257,8 @@ export default function Header({dark,setDark}){
 
                             gap-3
 
-                            p-3
-                            ">
+                            p-3`
+                            }>
                             <div className="
                             grid
 
