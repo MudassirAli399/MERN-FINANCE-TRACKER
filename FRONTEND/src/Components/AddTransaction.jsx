@@ -47,16 +47,18 @@ export default function AddTransaction() {
   }
 
   return (
-    <div className="border-2 border-black h-screen w-1/3 bg-white absolute md:top-[25%] bottom-2  left-[40%] lg:top-2 ">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+
+    <div className="border-2 border-black w-full max-w-md max-h-[90vh] overflow-y-auto bg-white rounded-lg">
 
       {/* Top blue bar */}
       <div className="h-1 w-full bg-gradient-to-r from-blue-400 via-blue-600 to-indigo-500" />
 
-      <div className="px-8 py-7 flex flex-col h-full">
+      <div className="px-5 sm:px-8 py-6 sm:py-7 flex flex-col">
 
         {/* Heading */}
         <div className="mb-6">
-          <h2 className="text-2xl font-bold text-slate-800">Add Transaction</h2>
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-800">Add Transaction</h2>
           <p className="text-sm text-slate-400 mt-1">
             Enter the details of your transaction below
           </p>
@@ -65,7 +67,7 @@ export default function AddTransaction() {
         <div className="h-px bg-slate-100 mb-6" />
 
         {/* Form */}
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 flex-1">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
 
           {/* Amount */}
           <div>
@@ -100,7 +102,7 @@ export default function AddTransaction() {
           </div>
 
           {/* Type and Category */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
             {/* Type */}
             <div>
@@ -138,7 +140,7 @@ export default function AddTransaction() {
           </div>
 
           {/* Buttons */}
-          <div className="flex gap-3 pt-6 border-t border-slate-100 mt-auto">
+          <div className="flex gap-3 pt-6 border-t border-slate-100">
             <button
               type="button"
               onClick={popup} 
@@ -156,6 +158,8 @@ export default function AddTransaction() {
 
         </form>
       </div>
+    </div>
+
     </div>
   );
 }

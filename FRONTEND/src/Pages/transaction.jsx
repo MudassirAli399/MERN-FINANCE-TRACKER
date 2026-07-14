@@ -77,25 +77,25 @@ export default function Transaction(){
 
             Budget.Created ? (
 
-            <div className="bg-[#FAFAFA] dark:bg-gray-800 text-black dark:text-white p-[4%] h-auto overflow-y-auto scroll-auto grid grid-rows-[0.5fr_3.5fr]">
+            <div className="bg-[#FAFAFA] dark:bg-gray-800 text-black dark:text-white p-4 sm:p-[4%] h-auto overflow-y-auto scroll-auto flex flex-col gap-4">
 
-            <div className="flex flex-row justify-between">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-0 sm:justify-between sm:items-center">
 
-                <div className="w-1/3 h-full">
+                <div className="w-full sm:w-2/3">
 
                     <div>
-                        <h1 className="text-[30px] font-sans font-bold">
+                        <h1 className="text-[24px] sm:text-[30px] font-sans font-bold">
                             Transactions
                         </h1>
 
-                        <p className="text-gray-600 dark:text-gray-300">
+                        <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">
                             View and manage all your transactions
                         </p>
                     </div>
 
                 </div>
 
-                <div className="w-1/6 h-full flex justify-center items-center">
+                <div className="w-full sm:w-1/6 flex justify-start sm:justify-center items-center">
 
                     <div className="w-full">
 
@@ -103,7 +103,7 @@ export default function Transaction(){
                         onClick={()=>{
                             dispatch(UpdateTransaction({Popup:true}))
                         }}
-                        className="bg-[#1C77AA] text-white w-full h-9 cursor-pointer rounded"
+                        className="bg-[#1C77AA] text-white w-full h-9 cursor-pointer rounded whitespace-nowrap"
                         >
                             Add Transaction
                         </button>
@@ -114,32 +114,34 @@ export default function Transaction(){
 
             </div>
 
-            <div className="bg-[#FFFFFF] dark:bg-gray-900 border-gray-400 dark:border-gray-700 border rounded-2xl p-[2%] grid grid-rows-[40px_50px_3.4fr] mt-[2%]">
+            <div className="bg-[#FFFFFF] dark:bg-gray-900 border-gray-400 dark:border-gray-700 border rounded-2xl p-3 sm:p-[2%] flex flex-col gap-3">
 
                 <div className="flex items-center">
                     <h3>All Transactions</h3>
                 </div>
 
-                <div className="flex flex-row justify-between">
+                <div className="flex flex-col md:flex-row gap-2 md:justify-between">
 
-                    <div className="h-full w-1/2 flex gap-2  dark:border-gray-700 pb-[1%]">
+                    <div className="w-full md:w-1/2 flex gap-2 dark:border-gray-700 pb-[1%]">
 
                         <input
                             onChange={(e)=>setSearch(e.target.value)}
                             type="text"
-                            className="flex-1 px-3 py-2.5 rounded-lg bg-slate-50 dark:bg-gray-700 border border-slate-200 dark:border-gray-600 text-sm outline-none focus:ring-2 focus:ring-blue-400 transition"
+                            className="flex-1 min-w-0 px-3 py-2.5 rounded-lg bg-slate-50 dark:bg-gray-700 border border-slate-200 dark:border-gray-600 text-sm outline-none focus:ring-2 focus:ring-blue-400 transition"
                         />
 
                         <button
                             onClick={searchTrans}
-                            className="px-5 py-2 rounded-lg bg-[#1C77AA] text-white hover:bg-[#155e85] transition cursor-pointer"
+                            className="px-4 sm:px-5 py-2 rounded-lg bg-[#1C77AA] text-white hover:bg-[#155e85] transition cursor-pointer shrink-0"
                         >
                             Search
                         </button>
 
                     </div>
 
-                    <div className="h-full w-1/5">
+                    <div className="flex gap-2">
+
+                    <div className="w-1/2 md:w-[140px]">
 
                         <select
                         onChange={(e)=>setSelectedType(e.target.value)}
@@ -162,7 +164,7 @@ export default function Transaction(){
 
                     </div>
 
-                    <div className="h-full w-1/5">
+                    <div className="w-1/2 md:w-[140px]">
 
                         <select
                         onChange={(e)=>setSelectedType(e.target.value)}
@@ -190,18 +192,22 @@ export default function Transaction(){
 
                     </div>
 
+                    </div>
+
                 </div>
 
-                <table className="w-full text-left">
+                <div className="w-full overflow-x-auto">
+
+                <table className="w-full min-w-[600px] text-left">
 
                     <thead className="bg-[#1C77AA] text-white h-[40px]">
 
                         <tr>
-                            <th className="px-[2%]">Date</th>
-                            <th className="px-[2%]">Category</th>
-                            <th className="px-[2%]">Amount</th>
-                            <th className="px-[2%]">Type</th>
-                            <th className="px-[2%]">Description</th>
+                            <th className="px-[2%] whitespace-nowrap">Date</th>
+                            <th className="px-[2%] whitespace-nowrap">Category</th>
+                            <th className="px-[2%] whitespace-nowrap">Amount</th>
+                            <th className="px-[2%] whitespace-nowrap">Type</th>
+                            <th className="px-[2%] whitespace-nowrap">Description</th>
                         </tr>
 
                     </thead>
@@ -218,7 +224,7 @@ export default function Transaction(){
                             className="h-[30px] border-t dark:border-gray-700"
                             >
 
-                                <td className="px-[2%]">
+                                <td className="px-[2%] whitespace-nowrap">
                                     {item.date}
                                 </td>
 
@@ -226,7 +232,7 @@ export default function Transaction(){
                                     {item.category}
                                 </td>
 
-                                <td className="px-[2%]">
+                                <td className="px-[2%] whitespace-nowrap">
                                     {item.amount}
                                 </td>
 
@@ -248,6 +254,8 @@ export default function Transaction(){
                     </tbody>
 
                 </table>
+
+                </div>
 
             </div>
 

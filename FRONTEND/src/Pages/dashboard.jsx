@@ -94,8 +94,8 @@ export default function Dashboard(){
         {user.Active ? (
             
                 budget.Created ? (
-            <div className=" lg:h-[800px] md:h-[1600px] grid grid-rows-[1fr_3fr] p-6 gap-4 overflow-y-auto">
-                <div className=" flex lg:flex-row md:flex-col p-2 gap-4 md:items-center justify-between">
+            <div className="min-h-screen lg:h-[800px] flex flex-col p-3 sm:p-4 md:p-6 gap-4 overflow-y-auto">
+                <div className="flex flex-col sm:flex-row p-1 sm:p-2 gap-3 sm:gap-4 sm:items-center justify-between">
                     <DashboardCard
                         text = "Income"
                         month = {transaction.Month}
@@ -110,19 +110,19 @@ export default function Dashboard(){
                     {/* <div className="bg-green-900 lg:h-full lg:w-1/4 md:w-full md:h-1/4"></div> */}
                     
                 </div>
-                <div className=" flex lg:flex-row md:flex-col gap-2">
-                    <div className="flex-3 p-2 border-1 rounded-2xl border-gray-400 bg-[rgb(255,255,255)]]">
-                        <h3 className="font-medium font-sans text-[20px]">Income vs Expense</h3>
-                        <p className="font-light text-gray-500 font-sans text-[15px]">THis is Raw Data.Original data will be show after 1 month</p>
-                        <div className="mt-[2%]"><MonthlyChart  data={chartData}/></div>
+                <div className="flex flex-col lg:flex-row gap-4">
+                    <div className="flex-3 min-w-0 p-3 sm:p-4 border-1 rounded-2xl border-gray-400 bg-[rgb(255,255,255)]]">
+                        <h3 className="font-medium font-sans text-[18px] sm:text-[20px]">Income vs Expense</h3>
+                        <p className="font-light text-gray-500 font-sans text-[13px] sm:text-[15px]">THis is Raw Data.Original data will be show after 1 month</p>
+                        <div className="mt-[2%] overflow-x-auto"><MonthlyChart  data={chartData}/></div>
                     </div>
-                    <div className="flex-2 border border-gray-400 dark:border-gray-700 rounded-2xl bg-white dark:bg-gray-900 p-4">
+                    <div className="flex-2 min-w-0 border border-gray-400 dark:border-gray-700 rounded-2xl bg-white dark:bg-gray-900 p-3 sm:p-4">
 
-    <h3 className="font-medium font-sans text-[20px]">
+    <h3 className="font-medium font-sans text-[18px] sm:text-[20px]">
         Last 5 Transactions
     </h3>
 
-    <p className="font-light text-gray-500 dark:text-gray-300 text-[14px] mb-4">
+    <p className="font-light text-gray-500 dark:text-gray-300 text-[13px] sm:text-[14px] mb-4">
         Recent activity
     </p>
 
@@ -138,22 +138,22 @@ export default function Dashboard(){
 
             <div
             key={index}
-            className="flex justify-between items-center border-b border-gray-200 dark:border-gray-700 pb-2"
+            className="flex justify-between items-center gap-2 border-b border-gray-200 dark:border-gray-700 pb-2"
             >
 
-                <div>
+                <div className="min-w-0">
 
-                    <p className="font-medium">
+                    <p className="font-medium truncate">
                         {item.category}
                     </p>
 
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                    <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
                         {item.description}
                     </p>
 
                 </div>
 
-                <div className="text-right">
+                <div className="text-right shrink-0">
 
                     <p className={`font-bold ${
                         item.type==="expense"

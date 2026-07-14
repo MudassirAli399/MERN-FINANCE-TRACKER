@@ -8,16 +8,16 @@ export default function Header({dark,setDark}){
     return(
         <>
             <div className="
+            w-full
+            h-auto
+            md:h-auto
             lg:h-screen
-            md:h-[300px]
-            md:w-full
-            md:sticky
-            md:top-0
-            md:bottom-0
+            sticky
+            top-0
             z-50
-            lg:sticky
-            lg:top-0
-            border-r
+            border-b
+            lg:border-b-0
+            lg:border-r
             bg-white
             text-black
             dark:bg-gray-900
@@ -25,21 +25,30 @@ export default function Header({dark,setDark}){
             dark:border-gray-700
             ">
 
-                <div className="h-full w-full flex lg:flex-col md:flex-row">
+                <div className="h-full w-full flex flex-col md:flex-row lg:flex-col">
 
                     {/* Logo */}
                     <div className="
-                    border-b border-black
+                    border-b
+                    md:border-b-0
+                    md:border-r
+                    lg:border-r-0
+                    lg:border-b
+                    border-black
                     flex items-center justify-center
-                    flex-[0.3] gap-1.5
+                    gap-1.5
+                    py-3
+                    md:flex-[0.3]
+                    lg:flex-[0.3]
                     dark:border-gray-700
                     ">
 
                         <svg
-                        width="40"
-                        height="40"
+                        width="36"
+                        height="36"
                         viewBox="0 0 200 200"
                         xmlns="http://www.w3.org/2000/svg"
+                        className="shrink-0"
                         >
 
                             <circle
@@ -92,7 +101,8 @@ export default function Header({dark,setDark}){
 
                         <p className="
                         font-sans
-                        text-[20px]
+                        text-[18px]
+                        sm:text-[20px]
                         font-light
                         dark:text-white
                         ">
@@ -103,27 +113,38 @@ export default function Header({dark,setDark}){
 
                     {/* Navigation */}
                     <div className="
-                    border-b border-black
-                    flex-[3]
+                    border-b
+                    lg:border-b
+                    md:border-b-0
+                    md:border-r
+                    lg:border-r-0
+                    border-black
                     flex
-                    lg:flex-col
+                    flex-col
+                    sm:flex-row
                     md:flex-row
-                    md:gap-8
+                    lg:flex-col
+                    flex-wrap
+                    md:flex-nowrap
+                    md:flex-[3]
+                    lg:flex-[3]
+                    gap-2
+                    md:gap-4
                     lg:gap-2
+                    items-stretch
                     md:items-center
                     lg:items-start
-                    lg:justify-start
-                    md:justify-center
+                
                     p-3
                     dark:border-gray-700
                     ">
 
-                        <div className="lg:h-[40px] md:h-[100px] md:w-[100px] lg:w-full flex justify-center">
+                        <div className="h-[40px] w-full md:w-[110px] lg:w-full flex justify-center">
 
                             <NavLink
                             to="/"
                             className={({isActive}) =>
-                            `block w-full text-center font-sans text-[20px] rounded-xl
+                            `flex items-center justify-center w-full h-full text-center font-sans text-[16px] sm:text-[18px] lg:text-[20px] rounded-xl
                             ${
                             isActive
                             ? "text-white bg-[rgb(3,105,161)]"
@@ -136,12 +157,12 @@ export default function Header({dark,setDark}){
 
                         </div>
 
-                        <div className="lg:h-[40px] md:h-[100px] md:w-[100px] lg:w-full flex justify-center">
+                        <div className="h-[40px] w-full md:w-[110px] lg:w-full flex justify-center">
 
                             <NavLink
                             to="/transaction"
                             className={({isActive}) =>
-                            `block w-full text-center font-sans text-[20px] rounded-xl
+                            `flex items-center justify-center w-full h-full text-center font-sans text-[16px] sm:text-[18px] lg:text-[20px] rounded-xl
                             ${
                             isActive
                             ? "text-white bg-[rgb(3,105,161)]"
@@ -154,12 +175,12 @@ export default function Header({dark,setDark}){
 
                         </div>
 
-                        <div className="lg:h-[40px] md:h-[100px] md:w-[100px] lg:w-full flex justify-center">
+                        <div className="h-[40px] w-full md:w-[110px] lg:w-full flex justify-center">
 
                             <NavLink
                             to="/budgetplanner"
                             className={({isActive}) =>
-                            `block w-full text-center font-sans text-[20px] rounded-xl
+                            `flex items-center justify-center w-full h-full text-center font-sans text-[16px] sm:text-[18px] lg:text-[20px] rounded-xl
                             ${
                             isActive
                             ? "text-white bg-[rgb(3,105,161)]"
@@ -172,12 +193,12 @@ export default function Header({dark,setDark}){
 
                         </div>
 
-                        <div className="lg:h-[40px] md:h-[100px] md:w-[100px] lg:w-full flex justify-center">
+                        <div className="h-[40px] w-full md:w-[110px] lg:w-full flex justify-center">
 
                             <NavLink
                             to="/reports"
                             className={({isActive}) =>
-                            `block w-full text-center font-sans text-[20px] rounded-xl
+                            `flex items-center justify-center w-full h-full text-center font-sans text-[16px] sm:text-[18px] lg:text-[20px] rounded-xl
                             ${
                             isActive
                             ? "text-white bg-[rgb(3,105,161)]"
@@ -194,12 +215,32 @@ export default function Header({dark,setDark}){
 
                     {user.Active ? (
 
-                        <div className="flex-[0.7] grid lg:grid-rows-[2.5fr_1.5fr] gap-2">
+                            <div className="
+                            w-full
 
-                            <div className="grid lg:grid-cols-[1fr_3fr]">
+                            grid
 
-                                <div className="flex justify-end items-end">
+                            grid-cols-1
+                            sm:grid-cols-2
+                            md:grid-cols-1
+                            lg:grid-cols-1
 
+                            gap-3
+
+                            p-3
+                            ">
+                            <div className="
+                            grid
+
+                            grid-cols-[50px_1fr]
+
+                            items-center
+                            ">
+                                <div className="
+                                flex
+                                justify-center
+                                items-center
+                                ">
                                     <div className="
                                     w-10 h-10
                                     text-center
@@ -214,13 +255,18 @@ export default function Header({dark,setDark}){
 
                                 </div>
 
-                                <div className="text-[12px] pt-3">
+                                <div className="
+                                        text-sm
+                                        pl-2
+                                        truncate
+                                        ">
 
                                     <p className="
                                     font-bold
                                     font-sans
                                     text-black
                                     dark:text-white
+                                    truncate
                                     ">
                                         {user.Name}
                                     </p>
@@ -229,6 +275,7 @@ export default function Header({dark,setDark}){
                                     text-gray-600
                                     font-sans
                                     dark:text-gray-300
+                                    truncate
                                     ">
                                         {user.Email}
                                     </p>
@@ -242,7 +289,8 @@ export default function Header({dark,setDark}){
                                 <button
                                 onClick={() => setDark(!dark)}
                                 className="
-                                block w-full h-full rounded-xl
+                                block w-full h-full min-h-[40px] rounded-xl
+                                text-sm sm:text-base
                                 bg-[rgb(250,250,250)]
                                 text-black
                                 dark:bg-gray-700
@@ -260,7 +308,7 @@ export default function Header({dark,setDark}){
 
                     ) : (
 
-                        <center>
+                        <center className="py-3">
                             <Link to="/create">
                                 Create/Login Account
                             </Link>

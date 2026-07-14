@@ -77,9 +77,9 @@ export default function Addbudget() {
         (<div className="min-h-screen flex items-center justify-center bg-[whitesmoke] p-4">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-white p-8 rounded-xl shadow-md w-full max-w-md space-y-5"
+        className="bg-white p-5 sm:p-8 rounded-xl shadow-md w-full max-w-md space-y-5"
       >
-        <h1 className="text-2xl font-semibold text-blue-600 mb-2">
+        <h1 className="text-xl sm:text-2xl font-semibold text-blue-600 mb-2">
           Create Budget
         </h1>
 
@@ -97,7 +97,7 @@ export default function Addbudget() {
        
 
         {fields.map((field, index) => (
-          <div key={field.id} className="grid grid-cols-2 gap-3">
+          <div key={field.id} className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="block text-sm text-slate-700 mb-1">
                 Name

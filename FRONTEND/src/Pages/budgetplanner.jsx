@@ -37,9 +37,10 @@ export default function Budgetplanner(){
             <div className="
             min-h-screen
             w-full
-            grid
-            grid-rows-[80px_auto_auto_auto]
-            p-5
+            flex
+            flex-col
+            p-4
+            sm:p-5
             bg-[rgb(250,250,250)]
             dark:bg-gray-800
             text-black
@@ -48,16 +49,16 @@ export default function Budgetplanner(){
             ">
 
                 <div>
-                    <h1 className="text-[30px] font-sans font-bold">
+                    <h1 className="text-[24px] sm:text-[30px] font-sans font-bold">
                         Budget Planner
                     </h1>
 
-                    <p className="text-gray-600 dark:text-gray-300">
+                    <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">
                         Track and manage your monthly budgets
                     </p>
                 </div>
 
-                <div className="grid lg:grid-cols-[1fr_1fr_1fr] gap-3 md:grid-cols-2">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
 
                 {
                     Data.map((item)=>{
@@ -85,41 +86,42 @@ export default function Budgetplanner(){
                 border
                 border-gray-400
                 dark:border-gray-700
-                p-5
+                p-4
+                sm:p-5
                 ">
 
-                    <h1 className="text-[20px] font-semibold mb-4">
+                    <h1 className="text-[18px] sm:text-[20px] font-semibold mb-4">
                         Budget Summary
                     </h1>
 
-                    <div className="flex justify-between">
+                    <div className="flex flex-col sm:flex-row gap-4 sm:gap-0 sm:justify-between">
 
                         <div>
-                            <div className="text-gray-500 dark:text-gray-300">
+                            <div className="text-gray-500 dark:text-gray-300 text-sm sm:text-base">
                                 Total Budget
                             </div>
 
-                            <p className="font-mono text-[20px]">
+                            <p className="font-mono text-[18px] sm:text-[20px]">
                                 ${totalbudget}
                             </p>
                         </div>
 
                         <div>
-                            <div className="text-gray-500 dark:text-gray-300">
+                            <div className="text-gray-500 dark:text-gray-300 text-sm sm:text-base">
                                 Total Spent
                             </div>
 
-                            <p className="font-mono text-[20px]">
+                            <p className="font-mono text-[18px] sm:text-[20px]">
                                 ${spent}
                             </p>
                         </div>
 
                         <div>
-                            <div className="text-gray-500 dark:text-gray-300">
+                            <div className="text-gray-500 dark:text-gray-300 text-sm sm:text-base">
                                 Total Remaining
                             </div>
 
-                            <p className="font-mono text-[20px] text-green-500">
+                            <p className="font-mono text-[18px] sm:text-[20px] text-green-500">
                                 ${totalbudget-spent}
                             </p>
                         </div>
@@ -131,14 +133,14 @@ export default function Budgetplanner(){
             </div>
 
             ) : (
-
+                <div className="w-full h-full flex items-center justify-center">
                 <Link
-                className="dark:text-white"
+                className="dark:text-white border-2 border-gray-400 dark:border-gray-700 rounded-lg px-4 py-2 bg-blue-50 hover:bg-blue-100 dark:bg-gray-800 dark:hover:bg-gray-700"
                 to="/budgetplanner/create"
                 >
                     Create
                 </Link>
-
+                </div>
             )
 
         ) : (
