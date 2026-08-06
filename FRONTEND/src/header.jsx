@@ -31,8 +31,9 @@ export default function Header({dark,setDark}){
         <>
             <div className="
             w-full
-            h-auto
-            md:h-auto
+
+            sm:h-auto
+            
             lg:h-screen
             sticky
             top-0
@@ -47,7 +48,7 @@ export default function Header({dark,setDark}){
             dark:border-gray-700
             ">
 
-                <div className="h-full w-full flex flex-col md:flex-row lg:flex-col">
+                <div className="h-full  w-full flex flex-col md:flex-row lg:flex-col">
 
                     {/* Logo */}
                     <div className="
@@ -145,7 +146,9 @@ export default function Header({dark,setDark}){
 
                     {/* Navigation */}
                     <div className={
+                        
                     `border-b
+                    
                     lg:border-b
                     md:border-b-0
                     md:border-r

@@ -6,8 +6,9 @@ dotenv.config();
 // First connect to database then start server
 Connectdb().then(
   ()=>{
+    app.on("error",error=>console.log(error));
     app.listen(3000,()=>console.log("server is running on port 3000"));
   }
-)
+).catch(err=>console.log(err));
 
 

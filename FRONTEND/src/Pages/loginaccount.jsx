@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../Store/Slice.js";
@@ -7,6 +8,7 @@ export default function Login() {
   const user = useSelector((state) => state.User);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [click,setClick] = React.useState(false)
   const {
     register,
     handleSubmit,
@@ -91,10 +93,13 @@ export default function Login() {
         </div>
 
         <button
+          onClick={() => setClick(true)}
           type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-md transition"
+          disabled={click}
+          className={`w-full ${click ? "bg-blue-200" : "bg-blue-600 hover:bg-blue-700"}  text-white font-medium py-2 rounded-md transition`}
         >
-          Login
+          {click ? "Logging in..." : "Login"}
+          
         </button>
         <p className="text-center text-sm text-slate-500 pt-1">
           Forgot?Click here:-{" "}
