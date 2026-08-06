@@ -25,6 +25,7 @@ console.log("Hello")
 
 app.get("/", (req,res)=>{
     return res.json({
+      Mongodb_URl : process.env.MONGODB_URL,
        database:
             mongoose.connection.readyState === 1
                 ? "Connected"
