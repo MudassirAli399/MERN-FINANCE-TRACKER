@@ -4,6 +4,7 @@ import budgetrouter from "./routes/budget.route.js";
 import transRouter from "./routes/transaction.route.js";
 import cors from "cors"
 import cookieParser from "cookie-parser"
+import mongoose from "mongoose"
 
 const app = express();
 
@@ -22,7 +23,14 @@ app.use(cookieParser())
 
 
 
-app.get("/", (req, res) => res.send("Hello World!"));
+app.get("/", (req,res)=>{
+    return res.json({
+       database:
+            mongoose.connection.readyState === 1
+                ? "Connected"
+                : "Disconnected"
+    })
+})
 
 app.use("/api/user",userRouter)
 
